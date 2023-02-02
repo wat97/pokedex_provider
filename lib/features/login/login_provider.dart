@@ -6,6 +6,9 @@ class LoginProvider extends CustomCore {
   String cobaExtras;
   LoginProvider(this.cobaExtras);
 
+  TextEditingController controllerUser = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+
   @override
   void onInit(
     BuildContext context, {

@@ -5,7 +5,10 @@ import '../../core/custom_core.dart';
 import '../../router/router.dart';
 
 class SplashProvider extends CustomCore {
-  bool isLoading = true;
+  bool isInitialize = false;
+  final double turns = 360;
+
+  late final AnimationController controllerAnimation;
 
   @override
   void onInit(
@@ -19,13 +22,24 @@ class SplashProvider extends CustomCore {
 
       await Future.delayed(
         const Duration(
-          seconds: 3,
+          seconds: 5,
         ),
         () {
           debugPrint("splash ${DateTime.now()}");
+          controllerAnimation.dispose();
           context.go(RouterNavigation.routelogin, extra: '123');
         },
       );
+    });
+  }
+
+  void setAnimation(TickerProvider vsync) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      controllerAnimation =
+          AnimationController(vsync: vsync, duration: Duration(seconds: 2))
+            ..repeat();
+      isInitialize = true;
+      notifyListeners();
     });
   }
 }

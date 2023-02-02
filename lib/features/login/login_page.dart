@@ -1,6 +1,8 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:translatebebasan/translatebebasan.dart';
 
+import '../../widget/widget.dart';
 import 'login_provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -43,8 +45,43 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget contentPage(BuildContext context, LoginProvider prov) {
     return Expanded(
-      child: SizedBox(
-        child: Text(prov.cobaExtras),
+      child: Container(
+        child: Column(
+          children: [
+            Spacer(
+              flex: 1,
+            ),
+            Text(
+              'login'.gr,
+              style: TextStyle(
+                fontSize: 25,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.green,
+                ),
+                child: Column(
+                  children: [
+                    TextFieldOutlinedIcon(
+                      controller: prov.controllerUser,
+                      enabled: true,
+                      colorBackground: Colors.white,
+                      borderWidth: BorderWidth.all(10),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Spacer(
+              flex: 1,
+            ),
+          ],
+        ),
       ),
     );
   }

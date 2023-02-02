@@ -17,7 +17,7 @@ class RouterApp {
         path: RouterNavigation.routesplash,
         builder: (context, state) => ChangeNotifierProvider(
           create: (context) => SplashProvider(),
-          builder: (context, child) => const SplashPage(),
+          builder: (context, child) => SplashPage(),
         ),
       ),
       GoRoute(
