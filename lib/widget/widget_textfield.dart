@@ -134,8 +134,9 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
                 ],
               ),
             );
-          } else
+          } else {
             return Container();
+          }
         });
   }
 
@@ -158,8 +159,13 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
       enabled: widget.enabled,
       keyboardType: widget.inputType,
       controller: widget.controller,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         border: InputBorder.none,
+        hintText: widget.hint,
+        label: Text(widget.label ?? ""),
+        floatingLabelBehavior: widget.floatingText
+            ? FloatingLabelBehavior.always
+            : FloatingLabelBehavior.never,
       ),
       obscureText: model.isObsecure,
       obscuringCharacter: widget.obsecureChar,
@@ -177,8 +183,10 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
     );
   }
 
-  Border customBorder(
-      {BorderWidth? borderWidth, Color borderColor = Colors.white}) {
+  Border customBorder({
+    BorderWidth? borderWidth,
+    Color borderColor = Colors.white,
+  }) {
     return borderWidth == null
         ? Border()
         : Border(
