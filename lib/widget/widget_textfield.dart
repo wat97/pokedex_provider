@@ -17,14 +17,14 @@ class BorderWidth {
   }
 }
 
-class ModelWidgetTextFieldOutlinedIcon {
+class ModelWidgetTextFieldOutlined {
   bool isObsecure;
-  ModelWidgetTextFieldOutlinedIcon({
+  ModelWidgetTextFieldOutlined({
     this.isObsecure = false,
   });
 }
 
-class TextFieldOutlinedIcon extends StatefulWidget {
+class TextFieldOutlined extends StatefulWidget {
   final String hint;
   final String? label;
   final String obsecureChar;
@@ -40,9 +40,9 @@ class TextFieldOutlinedIcon extends StatefulWidget {
   final Color? colorBackground;
   final Widget? childAsset;
   final Function? functionChildAsset;
-  bool isObsecure;
+  final bool isObsecure;
 
-  TextFieldOutlinedIcon({
+  const TextFieldOutlined({
     required this.controller,
     Key? key,
     this.hint = "",
@@ -63,18 +63,17 @@ class TextFieldOutlinedIcon extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TextFieldOutlinedIcon> createState() => _TextFieldOutlinedIconState();
+  State<TextFieldOutlined> createState() => _TextFieldOutlinedState();
 }
 
-class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
-  late final StreamController<ModelWidgetTextFieldOutlinedIcon>
-      _streamController;
+class _TextFieldOutlinedState extends State<TextFieldOutlined> {
+  late final StreamController<ModelWidgetTextFieldOutlined> _streamController;
 
   @override
   void initState() {
     super.initState();
     _streamController = StreamController();
-    _streamController.add(ModelWidgetTextFieldOutlinedIcon(
+    _streamController.add(ModelWidgetTextFieldOutlined(
       isObsecure: widget.isObsecure,
     ));
   }
@@ -87,11 +86,11 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ModelWidgetTextFieldOutlinedIcon>(
+    return StreamBuilder<ModelWidgetTextFieldOutlined>(
         stream: _streamController.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final ModelWidgetTextFieldOutlinedIcon model = snapshot.data!;
+            final ModelWidgetTextFieldOutlined model = snapshot.data!;
             return Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 5,
@@ -111,23 +110,21 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
                 children: [
                   Expanded(
                     flex: 5,
-                    child: TextFieldCustom(model),
+                    child: textFieldCustom(model),
                   ),
                   if (widget.isObsecure)
                     Expanded(
                       flex: 1,
-                      child: TextFieldObsecure(model),
+                      child: textFieldOutlined(model),
                     )
                   else if (widget.childAsset != null)
-                    Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          if (widget.functionChildAsset != null) {
-                            widget.functionChildAsset!();
-                          }
-                        },
-                        child: widget.childAsset,
-                      ),
+                    GestureDetector(
+                      onTap: () {
+                        if (widget.functionChildAsset != null) {
+                          widget.functionChildAsset!();
+                        }
+                      },
+                      child: widget.childAsset,
                     )
                   else
                     Container(),
@@ -140,21 +137,19 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
         });
   }
 
-  Container TextFieldObsecure(ModelWidgetTextFieldOutlinedIcon model) {
-    return Container(
-      child: GestureDetector(
-        onTap: () {
-          model.isObsecure = !model.isObsecure;
-          _streamController.add(model);
-        },
-        child: Icon(
-          model.isObsecure ? Icons.visibility_off : Icons.visibility,
-        ),
+  Widget textFieldOutlined(ModelWidgetTextFieldOutlined model) {
+    return GestureDetector(
+      onTap: () {
+        model.isObsecure = !model.isObsecure;
+        _streamController.add(model);
+      },
+      child: Icon(
+        model.isObsecure ? Icons.visibility_off : Icons.visibility,
       ),
     );
   }
 
-  TextField TextFieldCustom(ModelWidgetTextFieldOutlinedIcon model) {
+  TextField textFieldCustom(ModelWidgetTextFieldOutlined model) {
     return TextField(
       enabled: widget.enabled,
       keyboardType: widget.inputType,
@@ -188,7 +183,7 @@ class _TextFieldOutlinedIconState extends State<TextFieldOutlinedIcon> {
     Color borderColor = Colors.white,
   }) {
     return borderWidth == null
-        ? Border()
+        ? const Border()
         : Border(
             top: borderWidth.top == 0
                 ? BorderSide.none

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/features/dashboard/dashboard.dart';
 import 'package:provider/provider.dart';
 
 import '../features/features.dart';
@@ -17,7 +18,7 @@ class RouterApp {
         path: RouterNavigation.routesplash,
         builder: (context, state) => ChangeNotifierProvider(
           create: (context) => SplashProvider(),
-          builder: (context, child) => SplashPage(),
+          builder: (context, child) => const SplashPage(),
         ),
       ),
       GoRoute(
@@ -33,6 +34,24 @@ class RouterApp {
             child: ChangeNotifierProvider(
               create: (context) => LoginProvider(state.extra as String),
               builder: (context, child) => const LoginPage(),
+            ),
+            transitionDuration: const Duration(milliseconds: 10),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouterNavigation.routedashboard,
+        path: RouterNavigation.routedashboard,
+        builder: (context, state) => ChangeNotifierProvider(
+          create: (context) => DashboardProvider(),
+          builder: (context, child) => const DashboardPage(),
+        ),
+        pageBuilder: (context, state) {
+          return TransitionFadeRoute<void>(
+            key: state.pageKey,
+            child: ChangeNotifierProvider(
+              create: (context) => DashboardProvider(),
+              builder: (context, child) => const DashboardPage(),
             ),
             transitionDuration: const Duration(milliseconds: 10),
           );

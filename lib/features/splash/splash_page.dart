@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:translatebebasan/translatebebasan.dart';
 
 import 'splash_provider.dart';
 import 'dart:math' as math;
@@ -20,7 +19,7 @@ class _SplashPageState extends State<SplashPage>
       Provider.of<SplashProvider>(context, listen: false).setAnimation(this);
       Provider.of<SplashProvider>(context, listen: false).onInit(
         context,
-        tag: runtimeType.toString(),
+        runtimeType.toString(),
       );
     });
   }

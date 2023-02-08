@@ -8,20 +8,23 @@ import 'provider_core.dart';
 class CustomCore extends ProviderCore implements InterfaceCore {
   late BuildContext contextCore;
   late String tagCore;
+  bool isInit = false;
+  Size get size => MediaQuery.of(contextCore).size;
   @override
+  @mustCallSuper
   void onInit(
-    BuildContext context, {
-    String? tag = "CustomCore",
-  }) {
+    BuildContext context,
+    String? tag,
+  ) {
     contextCore = context;
-    tagCore = tag!;
+    tagCore = tag ?? "CustomCore";
+    isInit = true;
+    notifyListeners();
     debugPrint("CustomCore Tag: $tagCore");
   }
 
   @override
-  void showLoadingProgress(int value, int total) {
-    // TODO: implement showLoadingProgress
-  }
+  void showLoadingProgress(int value, int total) {}
 
   logOut() {
     ServicesStorage().removeAll();

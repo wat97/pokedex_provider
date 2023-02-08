@@ -12,10 +12,10 @@ class SplashProvider extends CustomCore {
 
   @override
   void onInit(
-    BuildContext context, {
+    BuildContext context,
     String? tag,
-  }) {
-    super.onInit(context, tag: tag);
+  ) {
+    super.onInit(context, tag);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       debugPrint("splash ${DateTime.now()}");
@@ -35,9 +35,9 @@ class SplashProvider extends CustomCore {
 
   void setAnimation(TickerProvider vsync) async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      controllerAnimation =
-          AnimationController(vsync: vsync, duration: Duration(seconds: 2))
-            ..repeat();
+      controllerAnimation = AnimationController(
+          vsync: vsync, duration: const Duration(seconds: 2))
+        ..repeat();
       isInitialize = true;
       notifyListeners();
     });

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
+import '../../router/router.dart';
 
 class LoginProvider extends CustomCore {
   String cobaExtras;
@@ -8,23 +10,8 @@ class LoginProvider extends CustomCore {
 
   TextEditingController controllerUser = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
-  bool isInit = false;
-  bool isDisableClick = true;
-  late Size _size;
-  Size get size => _size;
-  late FocusScopeNode focusNode;
 
-  @override
-  void onInit(
-    BuildContext context, {
-    String? tag,
-  }) {
-    super.onInit(context, tag: tag);
-    _size = MediaQuery.of(context).size;
-    isInit = true;
-    focusNode = FocusScopeNode();
-    notifyListeners();
-  }
+  bool isDisableClick = true;
 
   onTextChange(value) async {
     isDisableClick =
@@ -36,10 +23,14 @@ class LoginProvider extends CustomCore {
     // if (controllerUser.text.isEmpty || controllerPassword.text.isEmpty) {
     //   return;
     // }
-    debugPrint("RequestFocust ${focusNode.hasFocus}");
-    FocusScope.of(contextCore).setFirstFocus(focusNode);
-    FocusScope.of(contextCore).requestFocus(focusNode);
+    String userText = controllerUser.text.trim();
+    String passText = controllerPassword.text.trim();
+
+    if (userText.toLowerCase() == "admin" &&
+        passText.toLowerCase() == "admin") {
+      contextCore.go(RouterNavigation.routedashboard);
+    }
+
     notifyListeners();
-    debugPrint("RequestFocust Akhir ${focusNode.hasFocus}");
   }
 }
